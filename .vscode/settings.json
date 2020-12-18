@@ -4,29 +4,26 @@
         "Dockerfile*": "dockerfile",
         "iris.script": "objectscript"
       },
-    "objectscript.conn" :{
-      "ns": "USER",
-      "username": "_SYSTEM",
-      "password": "SYS",
-      "docker-compose": {
-        "service": "iris",
-        "internalPort": 52773
-      },
+        "objectscript.conn": {
+        "server": "local",
+        "ns": "qmsinit",
+        "active": true
+    },
+    "objectscript.export": {
+        "folder": "\\src\\",
+        "atelier": false,
+        "generated": false
+    },
       "active": true
     },
     "sqltools.connections": [
       {
-        "namespace": "USER",
+        "namespace": "qmsinit",
         "connectionMethod": "Server and Port",
         "showSystem": false,
         "previewLimit": 50,
-        "server": "localhost",
-        "port": 32770,
+        "server": "local",
         "askForPassword": false,
-        "driver": "InterSystems IRIS",
-        "name": "objectscript-docker",
-        "username": "_SYSTEM",
-        "password": "SYS"
       }
     ]
 
