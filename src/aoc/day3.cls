@@ -5,7 +5,7 @@ ClassMethod Run()
 {
 	new fileName set fileName="day3.txt"
 	new arrRef set arrRef=$name(^mtempX420) kill @arrRef
-	do util.file.load(fileName, arrRef)
+	do ##class(aoc.file).load(fileName, arrRef)
 	//w $data(@arrRef)
 
 	new i, row, treeCounter, emptyCounter, positonGlobal, positonRow, rowLength
@@ -29,7 +29,7 @@ ClassMethod Run()
 	set treeCounter=0, emptyCounter=0
     set positonGlobal=1
 	
-	for i=1:2:$O(@arrRef@(""),-1) do 
+	for i=1:2:$ORDER(@arrRef@(""),-1) do 
 	. if '$D(@arrRef@(i)) quit
 	. if $INCREMENT(k)
 	. set row=@arrRef@(i)
@@ -45,7 +45,7 @@ ClassMethod Run()
 
     new multiplyAll set multiplyAll=1
 
-	set i="" for  set i=$order(resArr(i)) quit:i=""  do 
+	set i="" for  set i=$ORDER(resArr(i)) quit:i=""  do 
 	. w $C(10,13)
 	. w "i="_i_", trees encountered:"_resArr(i)
 	. s multiplyAll=multiplyAll*resArr(i)

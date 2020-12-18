@@ -5,7 +5,7 @@ ClassMethod Run()
 {
 	new fileName set fileName="day2.txt"
 	new arrRef set arrRef=$name(^mtempX420) kill @arrRef
-	do util.file.load(fileName, arrRef)
+	do ##class(aoc.file).load(fileName, arrRef)
 	//w $data(@arrRef)
 
 	new i, j, k, str, limits, low, high, char, pass, matchCounter, oldPolicyTotal, newPolicyTotal
