@@ -26,9 +26,13 @@ ClassMethod Run()
     .. if flag="L" set high=high-((high-low+1)\2) set column=low
     . //w " column:"_column
     . set seatIdArr(row*8+column)=""
-    . //w "multiply:"_(row*8+column)
+    . ;w "multiply:"_(row*8+column)
 
     w $C(10,13)_"highest ID:"_$ORDER(seatIdArr(""),-1)
+    W $C(10)
+    new id
+    set id="" for  set id=$ORDER(seatIdArr(id)) quit:id=""  do 
+    . if $DATA(seatIdArr(id+1))=0 if $DATA(seatIdArr(id+2)) w "missed id:"_(id+1)
 }
 
 }
