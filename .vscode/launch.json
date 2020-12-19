@@ -5,7 +5,7 @@
         "type": "objectscript",
         "request": "launch",
         "name": "ObjectScript Debug Class", 
-        "program": "##class(aoc.day6).Run()",
+        "program": "##class(aoc.day7).Run()",
       },
       {
         "type": "objectscript",
