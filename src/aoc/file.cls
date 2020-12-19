@@ -22,4 +22,9 @@ ClassMethod load(file, arrRef)
 	quit
 }
 
+ClassMethod printArr(ref)
+{
+	for  set ref=$QUERY(@ref) quit:ref=""  w $C(10)_ref
+}
+
 }
