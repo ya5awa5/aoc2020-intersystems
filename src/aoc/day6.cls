@@ -10,7 +10,7 @@ ClassMethod Run()
 /// read batch file to array
 	do ##class(aoc.file).load(fileName, arrRef)
     
-    new i, j
+    new i, j, line
 /// traverse batch file
     set i="" for  set i=$ORDER(@arrRef@(i)) quit:i=""  do
     . set line=@arrRef@(i)
