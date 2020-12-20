@@ -14,52 +14,54 @@ ClassMethod Run()
 /// one more empty line as a last line in batch file.
     set @arrRef@($ORDER(@arrRef@(""),-1)+1)=""
 
-    new i, j, line, lineRest, bagParent, piece, spaces, bagColor, bagColorRoot
-
-/// part 1
+    new i, j, line, lineRest, piece, spaces, colorChild, colorRoot, quantity
     new parentArr, childArr
     
-/// part 1
+/// traverse bath file
     set i="" for  set i=$ORDER(@arrRef@(i)) quit:i=""  do
     . set line=@arrRef@(i)
-    . set bagColorRoot=$PIECE(line," ")_" "_$PIECE(line," ",2)
-    . set lineRest=$PIECE(line,bagColorRoot,2) set lineRest=$EXTRACT(lineRest,2,$LENGTH(lineRest))
+    . set colorRoot=$PIECE(line," ")_" "_$PIECE(line," ",2)
+    . set lineRest=$PIECE(line,colorRoot,2) set lineRest=$EXTRACT(lineRest,2,$LENGTH(lineRest))
     . if $FIND(lineRest, $$$SHINYGOLD)=0 set shinyGoldFlag=0
     . else  set shinyGoldFlag=1
     . for j=1:1:$LENGTH(lineRest,"bag") do
     .. set piece=$PIECE(lineRest,"bag",j) quit:$LENGTH(piece)<3
     .. set spaces=$LENGTH(piece," ")
-    .. set bagColor=$PIECE(piece," ",spaces-2)_" "_$PIECE(piece," ",spaces-1)
-    .. if bagColorRoot=$$$SHINYGOLD  
-    .. set parentArr(bagColor,bagColorRoot)=""
-    .. set childArr(bagColorRoot,bagColor)=""
+    .. set colorChild=$PIECE(piece," ",spaces-2)_" "_$PIECE(piece," ",spaces-1)
+    .. quit:colorChild="no other"
+    .. set quantity=$PIECE(piece," ",spaces-3)
+    .. if colorRoot=$$$SHINYGOLD  
+    .. set parentArr(colorChild,colorRoot)=""
+    .. set childArr(colorRoot,colorChild,quantity)=""
 
+    //do ##class(aoc.file).printArr($NAME(childArr))
     //do ##class(aoc.file).printArr($NAME(parentArr))
-    
-    new result, jj, i
-    if $$loop($$$SHINYGOLD, $NAME(parentArr))
-    set i="" for  set i=$ORDER(result(i)) quit:i=""  if $INCREMENT(jj)
-    w !,$GET(jj)
 
+/// part1    
     new result, jj, i
-    if $$loop($$$SHINYGOLD, $NAME(childArr))
+    set jj=0
+    do ..countRelatives($$$SHINYGOLD,$NAME(parentArr),$NAME(result))
     set i="" for  set i=$ORDER(result(i)) quit:i=""  if $INCREMENT(jj)
-    w !,$GET(jj)
+    w !,"How many bag colors can eventually contain at least one shiny gold bag? ",!,jj
+
+/// part2
+    new result
+    do ..countRelatives($$$SHINYGOLD,$NAME(childArr),$NAME(result))
+    w !,"How many individual bags are required inside your single shiny gold bag? ",!,$GET(result)
 
     quit
+}
 
-
-
-
-
-loop(root, arrRef)
-    //if $ORDER(resArr(root,""))="" quit
-    new node
+/// recursion
+ClassMethod countRelatives(root, arrRef, resultRef, inc)
+{
+    new node, multiply
+    set inc=$GET(inc,1)
     set node="" for  set node=$ORDER(@arrRef@(root,node)) quit:node=""  do
-    . set result(node)=""
-    . do loop(node, arrRef)
-
-    quit 1
+    . set @resultRef@(node)=""
+    . set multiply=$ORDER(@arrRef@(root,node,""))
+    . set @resultRef=$GET(@resultRef)+(inc*multiply)
+    . do ..countRelatives(node, arrRef, resultRef, inc*multiply)
 }
 
 }
