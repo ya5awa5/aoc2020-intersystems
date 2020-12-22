@@ -74,12 +74,15 @@ subgame(ref)
     . if $$configurationStore(ref)
     . set card1=$GET(@ref@(1,ind1))
     . set card2=$GET(@ref@(2,ind2))
+    . //subgame 
     . if (@ref@(1)-1)>=card1 if (@ref@(2)-1)>=card2 do
     .. new playerSub, v, h
     .. set v="" set h=ind1 
     .. for  set h=$ORDER(@ref@(1,h)) quit:h=""  if $INCREMENT(v) quit:v>card1  set playerSub(1,v)=@ref@(1,h)
     .. set v="" set h=ind2
     .. for  set h=$ORDER(@ref@(2,h)) quit:h=""  if $INCREMENT(v) quit:v>card2  set playerSub(2,v)=@ref@(2,h)
+    .. set playerSub(1)=@ref@(1)
+    .. set playerSub(2)=@ref@(2)
     .. set winner=$$subgame($NAME(playerSub))
     . 
     . else  if card1>card2 set winner=1
