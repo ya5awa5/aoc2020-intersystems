@@ -54,6 +54,58 @@ ClassMethod Run()
    //do ##class(aoc.file).printArr($NAME(player))
 }
 
+/// part1
+ClassMethod Run1()
+{
+	new fileName, arrRef
+    set fileName="day22test.txt"
+	set arrRef=$name(^mtempX420) kill @arrRef
+
+/// read batch file to array
+	do ##class(aoc.file).load(fileName, arrRef)
+
+    new i, j, value, player, ind1, ind2, card1, card2, cardQuantity
+
+/// part1
+/// parse file to player(1) and player(2) decks
+    set i="" for  set i=$ORDER(@arrRef@(i)) quit:i=""  do
+    . set value=@arrRef@(i)
+    . if value="" quit
+    . if value'=+value if $INCREMENT(jj) set cardQuantity=0 quit
+    . set player(jj)=$INCREMENT(cardQuantity)
+    . set player(jj,cardQuantity)=value
+
+    //do ##class(aoc.file).printArr($NAME(player)) 
+    //quit
+
+    new decksInitial
+    merge decksInitial=player
+
+/// game rounds
+    for  set ind1=$ORDER(player(1,"")), ind2=$ORDER(player(2,"")) quit:ind1=""!(ind2="")  do
+    . set card1=$GET(player(1,ind1))
+    . set card2=$GET(player(2,ind2))
+    . if card1>card2 do  quit
+    .. set player(1,$ORDER(player(1,""),-1)+1)=card1 
+    .. set player(1,$ORDER(player(1,""),-1)+1)=card2 
+    .. kill player(1,ind1), player(2,ind2)
+    . if card2>card1 do  quit
+    .. set player(2,$ORDER(player(2,""),-1)+1)=card2
+    .. set player(2,$ORDER(player(2,""),-1)+1)=card1 
+    .. kill player(1,ind1), player(2,ind2)
+
+    new winner, jj, result
+
+    set result=0 set jj=0
+    set winner=$ORDER(player(""))
+
+    for  set i=$ORDER(player(winner,i),-1) quit:i=""  do
+    . if $INCREMENT(jj)
+    . set result=result+(jj*player(winner,i))
+
+    w !,"result:",result
+}
+
 ClassMethod subgame(ref)
 {
     new ind1, ind2, card1, card2, winner, gameN, roundN, configurations
