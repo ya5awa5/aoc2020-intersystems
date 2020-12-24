@@ -24,7 +24,14 @@ ClassMethod load(file, arrRef)
 
 ClassMethod printArr(ref)
 {
-	for  set ref=$QUERY(@ref) quit:ref=""  w $C(10)_ref_"="_$GET(@ref)
+	for  set ref=$QUERY(@ref) quit:ref=""  w !,ref,"=",$GET(@ref)
+}
+
+ClassMethod printArrRow(ref)
+{
+	n g
+	set g="" f  s g=$O(@ref@(g)) q:g=""  w " ",$GET(@ref@(g))
+	//for  set ref=$QUERY(@ref) quit:ref=""  w " ",$GET(@ref)
 }
 
 }
