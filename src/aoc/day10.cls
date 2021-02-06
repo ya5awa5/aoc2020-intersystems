@@ -41,24 +41,54 @@ ClassMethod Run()
     w !,"them multyply:",step1*step3
 
 /// part 2
+    new adjacencyList
+    set adapter=""
+    for  set adapter=$ORDER(sortArr(adapter)) quit:adapter=""  do
+    . //w !,"a:"_adapter
+    . set adjacencyList(adapter)=""
+    . for j=1,2,3 do
+    .. set possibleAddapter=adapter+j 
+    .. if $DATA(sortArr(possibleAddapter)) set adjacencyList(adapter,possibleAddapter)=""
+    .
+    
+    //do ##class(aoc.file).printArr($NAME(adjacencyList))
 
-    set w(0)=""
-    set d(0)=1
 
-    new visited
-    set visit(device)=""
+    new visited ; array[n, false]  // создаём массив посещённых вершины длины n, заполненный false изначально
+    
+    //set i="" for  set i=$O(adjacencyList(i)) quit:i=""  do 
+    . if $GET(adjacencyList(i))="" do dfs(i)
 
+    //w !,">>"
+    //do ##class(aoc.file).printArr($NAME(adjacencyList))
 
-    w !,"part 2:",result
+    ;quit
+
+    new reslut
+    set result=..count(0,deviceIn)
+
+    w !,"----part 2----"
+    w !,"total number of ways: ",$g(result)
+
     quit
+
+
+dfs(u)  
+    set adjacencyList(u)="true"
+    set to=""
+    for  set to=$ORDER(adjacencyList(u,to)) quit:to=""  if $GET(adjacencyList(to))="" do dfs(to)
 }
 
-ClassMethod visit(node)
+ClassMethod count(v, t)
 {
-  set visited(node)=""
-  for i=0:1:i<pathsLength do
-  . if $INCREMENT(pathCount)
-    if $DATA(visited(node)) do ..visit(i)
+    if v=t quit 1
+
+    new s set s=0
+    new to set to="" 
+    for  set to=$ORDER(adjacencyList(v,to)) quit:to=""  do
+    . set s = s + ..count(to, t)
+
+    quit s
 }
 
 }

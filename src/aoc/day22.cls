@@ -1,3 +1,5 @@
+/// part 1 do ##class(aoc.day22).Run1()
+/// part 2 do ##class(aoc.day22).Run()
 Class aoc.day22 [ Not ProcedureBlock ]
 {
 
