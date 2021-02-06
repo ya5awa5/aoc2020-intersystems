@@ -9,7 +9,7 @@ ClassMethod load(file, arrRef)
     set path=dir_file
 	
     if '##class(%File).Exists(path) quit
-
+ 
 	set stream=##class(%Stream.FileCharacter).%New()
     set sc=stream.LinkToFile(path)
 	if 'sc do $system.Status.DisplayError(sc) quit

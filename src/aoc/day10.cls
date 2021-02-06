@@ -4,7 +4,7 @@ Class aoc.day10 [ Not ProcedureBlock ]
 ClassMethod Run()
 {
 	new fileName, arrRef
-    set fileName="day10.txt"
+    set fileName="day10test.txt"
 	set arrRef=$name(^mtempX420) kill @arrRef
 
 /// read batch file to array
