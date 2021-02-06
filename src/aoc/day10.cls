@@ -4,7 +4,7 @@ Class aoc.day10 [ Not ProcedureBlock ]
 ClassMethod Run()
 {
 	new fileName, arrRef
-    set fileName="day10test.txt"
+    set fileName="day10.txt"
 	set arrRef=$name(^mtempX420) kill @arrRef
 
 /// read batch file to array
@@ -35,7 +35,7 @@ ClassMethod Run()
 
     set deviceIn=$ORDER(sortArr(""),-1)
 
-    w !,"device's built-in adapter:",deviceIn," jolts"
+    w !,"device's built-in adapter:",deviceIn + 3," jolts"
     w !,"1-jolt differences:",step1
     w !,"3-jolt differences:",step3
     w !,"them multyply:",step1*step3
@@ -48,47 +48,31 @@ ClassMethod Run()
     . set adjacencyList(adapter)=""
     . for j=1,2,3 do
     .. set possibleAddapter=adapter+j 
-    .. if $DATA(sortArr(possibleAddapter)) set adjacencyList(adapter,possibleAddapter)=""
-    .
+    .. if $DATA(sortArr(possibleAddapter)) set adjacencyList(possibleAddapter,adapter)=""
     
-    //do ##class(aoc.file).printArr($NAME(adjacencyList))
-
-
-    new visited ; array[n, false]  // создаём массив посещённых вершины длины n, заполненный false изначально
+    ;do ##class(aoc.file).printArr($NAME(adjacencyList2))
     
-    //set i="" for  set i=$O(adjacencyList(i)) quit:i=""  do 
-    . if $GET(adjacencyList(i))="" do dfs(i)
-
-    //w !,">>"
-    //do ##class(aoc.file).printArr($NAME(adjacencyList))
-
-    ;quit
-
-    new reslut
-    set result=..count(0,deviceIn)
-
+    new waysToNode, visitedNodes, answer
+    set waysToNode(0) = 1
+    set visitedNodes(0) = "true"
+    set answer = ..count($NAME(adjacencyList), deviceIn)
+    
     w !,"----part 2----"
-    w !,"total number of ways: ",$g(result)
+    w !,"total number of ways: ",$g(answer)
 
     quit
-
-
-dfs(u)  
-    set adjacencyList(u)="true"
-    set to=""
-    for  set to=$ORDER(adjacencyList(u,to)) quit:to=""  if $GET(adjacencyList(to))="" do dfs(to)
 }
 
-ClassMethod count(v, t)
+ClassMethod count(graf, node)
 {
-    if v=t quit 1
-
-    new s set s=0
-    new to set to="" 
-    for  set to=$ORDER(adjacencyList(v,to)) quit:to=""  do
-    . set s = s + ..count(to, t)
-
-    quit s
+    if $GET(visitedNodes(node))="true" quit waysToNode(node)
+    
+    new sum set sum=0
+    set visitedNodes(node)="true"
+    new c set c="" 
+    for  set c=$ORDER(@graf@(node,c)) quit:c=""  set sum=sum+..count(graf, c)
+    set waysToNode(node)=sum
+    quit sum
 }
 
 }
