@@ -21,58 +21,57 @@ ClassMethod Run()
     . if value'=(+value) if $INCREMENT(jj) quit
     . set player(jj,$INCREMENT(player(jj)))=value
 
-    do ##class(aoc.file).printArr($NAME(player))
-    w !,"go!>>",!
-    
-    new debug set debug=0
-    new gameCount
+    set debug=0
+    if debug do ##class(aoc.file).printArr($NAME(player))
+    if debug w !,"go!>>",!
 
-    new winner
+/// play the game    
+    new gameCountGlob, winner
     set winner=..subgame(.player)
     
-    set result=0 set jj=0
-    set i=""
+/// Once the game ends, you can calculate the winning player's score.
+    set result=0 set jj=0 set i=""
     for  set i=$ORDER(player(winner,i),-1) quit:i=""  do
     . if $INCREMENT(jj)
     . set result=(player(winner,i)*jj)+result
     . set resultStr=$SELECT($GET(resultStr)="":"",1:resultStr_" + ")_jj_"*"_player(winner,i)
 
-    w !,"part 2"
-    w !,"winner:",winner
-    w !,"winner's deck:"  
-    d ##class(aoc.file).printArrRow($NAME(player(winner)))
-    w !,"resultStr:",resultStr
-    w !,"result:",result
+    write !,"part 2"
+    write !,"winner:",winner
+    write !,"winner's deck:"  
+    do ##class(aoc.file).printArrRow($NAME(player(winner)))
+    write !,"resultStr:",resultStr
+    write !,"result:",result
 }
 
 ClassMethod subgame(ByRef cards)
 {
     new setupSeen
-    new card1, card2, setupHash, gameC, roundC
+    new card1, card2, setupHash, gameCount, roundCount
     
-    set gameC=$INCREMENT(gameCount)
+    set gameCount=$INCREMENT(gameCountGlob)
 
     set card1=$GET(cards(1,1))
     set card2=$GET(cards(2,1))
 
     while (card1'="")&&(card2'="") {
-        if $INCREMENT(roundC(gameC))
-        w gameC," >> "
+        if $INCREMENT(roundCount(gameCount))
+        write:debug gameC," >> "
 
-        /// infinity loop    
         set setupHash=..getHash(.cards)
+/// infinity loop  
         if $DATA(setupSeen(setupHash)) {
-            ;write:debug !,"seen before. player 1 wins!"
-            write !,"seen before. player 1 wins!",!
+            write:debug !,"seen before. player 1 wins!"
             return 1
         }
+/// store current setup
         set setupSeen(setupHash)=""   
         
-        if debug w !,"game ",gameCount," round ",roundC(gameC)
+        if debug w !,"game ",gameCount," round ",roundCount(gameCount)
         if debug w !,"1: " do ##class(aoc.file).printArrRow($NAME(cards(1)))
         if debug w !,"2: " do ##class(aoc.file).printArrRow($NAME(cards(2)))
 
-        ///subgame
+///subgame
         if ((cards(1)-1))>=card1 && ((cards(2)-1)>=card2) {
             new tmp
             for v=2:1:card1+1 set tmp(1,$INCREMENT(tmp(1)))=cards(1,v)
@@ -82,12 +81,12 @@ ClassMethod subgame(ByRef cards)
             write:debug !,"subgame starting.."
             set winner=..subgame(.subDecks)
         }
-        ///regular won        
+ ///regular won        
         else {
             if card1>card2 set winner=1
             else  set winner=2
         }
-        ///new setup
+///new setup
         new newSetup, ii
         for ii=2:1:cards(1) set newSetup(1,$INCREMENT(newSetup(1)))=cards(1,ii)
         for ii=2:1:cards(2) set newSetup(2,$INCREMENT(newSetup(2)))=cards(2,ii)
