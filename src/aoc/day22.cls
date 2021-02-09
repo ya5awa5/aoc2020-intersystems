@@ -5,16 +5,16 @@ Class aoc.day22 [ Not ProcedureBlock ]
 
 ClassMethod Run()
 {
-	new fileName, arrRef
+    
+    new fileName, arrRef
     set fileName="day22.txt"
 	set arrRef=$name(^mtempX420) kill @arrRef
 
 /// read batch file to array
 	do ##class(aoc.file).load(fileName, arrRef)
 
-    new i, j, value, player
-
 /// parse file to player(1) and player(2) decks
+    new i, j, value, player
     set i="" for  set i=$ORDER(@arrRef@(i)) quit:i=""  do
     . set value=@arrRef@(i)
     . if value="" quit
@@ -64,7 +64,7 @@ ClassMethod subgame(ByRef cards)
             write:debug !,"seen before. player 1 wins!"
             return 1
         }
-/// store current setup
+/// store current cards setup
         set setupSeen(setupHash)=""   
         
         if debug w !,"game ",gameCount," round ",roundCount(gameCount)
