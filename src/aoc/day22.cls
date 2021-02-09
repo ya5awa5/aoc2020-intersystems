@@ -56,7 +56,7 @@ ClassMethod subgame(ByRef cards)
 
     while (card1'="")&&(card2'="") {
         if $INCREMENT(roundCount(gameCount))
-        write:debug gameC," >> "
+        write:debug gameCount," >> "
 
         set setupHash=..getHash(.cards)
 /// infinity loop  
@@ -109,7 +109,7 @@ ClassMethod subgame(ByRef cards)
     return winner
 }
 
-/// make string from current cards setup "1,4,2,...,3 - 5,2,6,...,3" (cards1 - cards2)
+/// make string from current cards setup "1,4,2,...,3 5,2,6,...,3" (cards1 cards2)
 /// to store setupSeen(SetupHash)
 ClassMethod getHash(ByRef cards)
 {
