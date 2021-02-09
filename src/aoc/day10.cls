@@ -53,9 +53,9 @@ ClassMethod Run()
     ;do ##class(aoc.file).printArr($NAME(adjacencyList2))
     
     new waysToNode, visitedNodes, answer
-    set waysToNode(0) = 1
-    set visitedNodes(0) = "true"
-    set answer = ..count($NAME(adjacencyList), deviceIn)
+    set waysToNode(0)=1
+    set visitedNodes(0)="true"
+    set answer=..count($NAME(adjacencyList), deviceIn)
     
     w !,"----part 2----"
     w !,"total number of ways: ",$g(answer)
