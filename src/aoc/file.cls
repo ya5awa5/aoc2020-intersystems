@@ -9,7 +9,7 @@ ClassMethod load(file, arrRef)
     set path=dir_file
 	
     if '##class(%File).Exists(path) quit
-
+ 
 	set stream=##class(%Stream.FileCharacter).%New()
     set sc=stream.LinkToFile(path)
 	if 'sc do $system.Status.DisplayError(sc) quit
@@ -20,6 +20,18 @@ ClassMethod load(file, arrRef)
 		}
 	m @arrRef=array
 	quit
+}
+
+ClassMethod printArr(ref)
+{
+	for  set ref=$QUERY(@ref) quit:ref=""  w !,ref,"=",$GET(@ref)
+}
+
+ClassMethod printArrRow(ref)
+{
+	n g
+	set g="" f  s g=$O(@ref@(g)) q:g=""  w " ",$GET(@ref@(g))
+	//for  set ref=$QUERY(@ref) quit:ref=""  w " ",$GET(@ref)
 }
 
 }
