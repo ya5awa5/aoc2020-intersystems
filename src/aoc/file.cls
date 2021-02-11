@@ -1,6 +1,8 @@
 Class aoc.file [ Not ProcedureBlock ]
 {
 
+Parameter Folder = "\input data\";
+
 ClassMethod load(file, arrRef)
 {
 	new dir, path
@@ -20,6 +22,24 @@ ClassMethod load(file, arrRef)
 		}
 	m @arrRef=array
 	quit
+}
+
+ClassMethod load2(fileName)
+{
+	new dir, path
+    ;set dir=##class(%SYSTEM.Process).CurrentDirectory() 
+    set dir="C:\repos\objectscript-docker-template\input data\"
+    set path=dir_fileName
+
+	Set fs=##clasS(%Stream.FileCharacter).%New()
+	Do fs.LinkToFile(path)
+	//s x = fs.ReadLine(),i=0
+	Set data=[]
+	While 'fs.AtEnd{
+		Set x=fs.ReadLine()
+		Do data.%Push(x)	
+	}
+	Return data
 }
 
 ClassMethod printArr(ref)
