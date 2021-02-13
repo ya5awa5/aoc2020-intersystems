@@ -63,6 +63,8 @@ ClassMethod Run()
     quit
 }
 
+/// count ways in graph adjacencyList
+/// with Depth-first search (DFS) is an algorithm for traversing or searching tree or graph data structures.
 ClassMethod count(graf, node)
 {
     if $GET(visitedNodes(node))="true" quit waysToNode(node)

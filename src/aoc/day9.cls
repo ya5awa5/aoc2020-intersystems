@@ -57,8 +57,8 @@ ClassMethod Run()
 
     //do ##class(aoc.file).printArr($NAME(resArr))
     new min, max
-    set min=$O(resArr(""))
-    set max=$O(resArr(""),-1)
+    set min=$ORDER(resArr(""))
+    set max=$ORDER(resArr(""),-1)
 
     w !,"part 2"
     w !,"cons:",$GET(cons)
